@@ -10,10 +10,11 @@
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5020"
     },
+    // Changed luanchUrl "weatherforecast" to "swagger"
     "https": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
