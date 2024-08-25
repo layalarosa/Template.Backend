@@ -1,6 +1,6 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Template.Backend;
+using Template.Backend.NewFolder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,10 +18,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 opciones.UseSqlServer("name=DefaultConnection"));
 
 // Codigo para Accelerar la acciones
-builder.Services.AddOutputCache(opciones =>
-{
-    opciones.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(60);
-});
+//builder.Services.AddOutputCache(opciones =>
+//{
+//    opciones.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(60);
+//});
 
 // Variable para CORS
 var origins =builder.Configuration.GetValue<string>("origins")!.Split(',');
@@ -51,7 +51,7 @@ app.UseHttpsRedirection();
 
 app.UseCors();
 
-app.UseOutputCache();
+//app.UseOutputCache();
 
 app.UseAuthorization();
 

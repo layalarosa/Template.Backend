@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Template.Backend.Entities;
 
-namespace Template.Backend
+namespace Template.Backend.NewFolder
 {
     public class ApplicationDbContext : DbContext
-    {   
+    {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
         }
 
-        //public DbSet<Todo> Todos { get; set; }
+        public DbSet<Todo> Todos { get; set; }
     }
 }
