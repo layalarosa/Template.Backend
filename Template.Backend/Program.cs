@@ -18,12 +18,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Identity Config
-builder.Services.AddIdentityCore<IdentityUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
+//builder.Services.AddIdentityCore<IdentityUser>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddDefaultTokenProviders();
 
-builder.Services.AddScoped<UserManager<IdentityUser>>();
-builder.Services.AddScoped<SignInManager<IdentityUser>>();
+//builder.Services.AddScoped<UserManager<IdentityUser>>();
+//builder.Services.AddScoped<SignInManager<IdentityUser>>();
 
 // Auth JWT Config
 builder.Services.AddAuthentication().AddJwtBearer(opciones =>
