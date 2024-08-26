@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Template.Backend.NewFolder;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,19 +17,46 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Identity Config
+builder.Services.AddIdentityCore<IdentityUser>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<UserManager<IdentityUser>>();
+builder.Services.AddScoped<SignInManager<IdentityUser>>();
+
+// Auth JWT Config
+builder.Services.AddAuthentication().AddJwtBearer(opciones =>
+{
+    opciones.MapInboundClaims = false;
+
+    opciones.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["keyjwt"]!)),
+        ClockSkew = TimeSpan.Zero
+
+    };
+
+});
+
+// DbContext Config
 builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 opciones.UseSqlServer("name=DefaultConnection"));
 
-// Codigo para Accelerar la acciones
+// Cache Config
 //builder.Services.AddOutputCache(opciones =>
 //{
 //    opciones.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(60);
 //});
 
-// Variable para CORS
+// var CORS Config
 var origins =builder.Configuration.GetValue<string>("origins")!.Split(',');
 
-// Cors Politic
+// Cors Politic Config
 builder.Services.AddCors(opciones =>
 {
     opciones.AddDefaultPolicy(opcionesCORS =>
