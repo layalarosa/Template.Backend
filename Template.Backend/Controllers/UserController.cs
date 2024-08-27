@@ -15,11 +15,11 @@ namespace Template.Backend.Controllers
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly IConfiguration configuration;
 
-        public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signManager, 
+        public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, 
             IConfiguration configuration)
         {
             this.userManager = userManager;
-            this.signInManager = signManager;
+            this.signInManager = signInManager;
             this.configuration = configuration;
         }
 
@@ -49,7 +49,7 @@ namespace Template.Backend.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<AuthenticationResponseDto>> Login(UserCredentialsDto userCredentialsDto)
         {
-            var user = await userManager.FindByIdAsync(userCredentialsDto.Email);
+            var user = await userManager.FindByEmailAsync(userCredentialsDto.Email);
 
             if (user is null)
             {
