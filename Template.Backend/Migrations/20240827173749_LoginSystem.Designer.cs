@@ -12,8 +12,8 @@ using Template.Backend.NewFolder;
 namespace Template.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240826000926_UserSystem")]
-    partial class UserSystem
+    [Migration("20240827173749_LoginSystem")]
+    partial class LoginSystem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
