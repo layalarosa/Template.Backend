@@ -33,15 +33,15 @@ namespace Template.Backend.Controllers
 
             };
 
-            var resultado = await userManager.CreateAsync(user, userCredentialsDto.Password);
+            var result = await userManager.CreateAsync(user, userCredentialsDto.Password);
 
-            if (resultado.Succeeded)
+            if (result.Succeeded)
             {
                 return await BuildToken(user);
             }
             else 
             {
-                return BadRequest(resultado.Errors);
+                return BadRequest(result.Errors);
             }
 
         }
@@ -53,8 +53,8 @@ namespace Template.Backend.Controllers
 
             if (user is null)
             {
-                var errores = IncorrectLogin();
-                return BadRequest(errores);
+                var errors = IncorrectLogin();
+                return BadRequest(errors);
 
             }
 
@@ -67,8 +67,8 @@ namespace Template.Backend.Controllers
             }
             else 
             {
-                var errores = IncorrectLogin();
-                return BadRequest(errores);
+                var errors = IncorrectLogin();
+                return BadRequest(errors);
 
             }
         }
@@ -76,9 +76,9 @@ namespace Template.Backend.Controllers
         private IEnumerable<IdentityError> IncorrectLogin()
         {
             var identityError = new IdentityError() { Description = "Incorrect Login" };
-            var errores = new List<IdentityError>();
-            errores.Add(identityError);
-            return errores;
+            var errors = new List<IdentityError>();
+            errors.Add(identityError);
+            return errors;
             
         }
 
