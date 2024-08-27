@@ -9,6 +9,7 @@ using Template.Backend.Dtos;
 namespace Template.Backend.Controllers
 {
     [Route("api/usuarios")]
+    [ApiController]
     public class UserController: ControllerBase
     {
         private readonly UserManager<IdentityUser> userManager;
@@ -49,7 +50,14 @@ namespace Template.Backend.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<AuthenticationResponseDto>> Login(UserCredentialsDto userCredentialsDto)
         {
-            var user = await userManager.FindByEmailAsync(userCredentialsDto.Email);
+            // Old code 
+            //var user = await userManager.FindByEmailAsync(userCredentialsDto.Email);
+
+            // Almacenar el email en una variable
+            string email = userCredentialsDto.Email;
+
+            // Utilizar la variable email en lugar de userCredentialsDto.Email
+            var user = await userManager.FindByEmailAsync(email);
 
             if (user is null)
             {
