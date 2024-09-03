@@ -71,14 +71,17 @@ builder.Services.AddCors(opciones =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    // app.MapOpenApi();
+//if (app.Environment.IsDevelopment())
+//{
+//    // app.MapOpenApi();
 
-    // Configure the SwaggerUI in .Net 9
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//    // Configure the SwaggerUI in .Net 9
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
