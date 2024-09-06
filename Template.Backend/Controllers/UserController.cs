@@ -8,7 +8,7 @@ using Template.Backend.Dtos;
 
 namespace Template.Backend.Controllers
 {
-    [Route("api/usuarios")]
+    [Route("api/user")]
     [ApiController]
     public class UserController: ControllerBase
     {
@@ -24,7 +24,7 @@ namespace Template.Backend.Controllers
             this.configuration = configuration;
         }
 
-        [HttpPost("registrar")]
+        [HttpPost("register")]
         public async Task<ActionResult<AuthenticationResponseDto>> Register(UserCredentialsDto userCredentialsDto)
         {
             var user = new IdentityUser
