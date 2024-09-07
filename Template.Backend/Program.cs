@@ -20,6 +20,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 // Identity Config
 builder.Services.AddIdentityCore<IdentityUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -44,6 +46,11 @@ builder.Services.AddAuthentication().AddJwtBearer(opciones =>
 
     };
 
+});
+
+builder.Services.AddAuthorization(opciones =>
+{
+    opciones.AddPolicy("isadmin", politica => politica.RequireClaim("isadmin"));
 });
 
 // DbContext Config
