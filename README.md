@@ -62,3 +62,7 @@ Project Benefits
 Separation of Responsibilities: Using Angular and ASP.NET Core allows for the separation of business logic and presentation logic, facilitating maintenance and scalability.
 User Experience: Angular provides a fast and interactive interface, improving the user experience.
 Scalability and Performance: ASP.NET Core and SQL Server allow for handling a high volume of bookings and queries with solid performance.
+
+10/12/2024 Update on the way v.1.0
+
+The code will be improved and we will be working with Angular for the client side.
