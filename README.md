@@ -65,4 +65,4 @@ Scalability and Performance: ASP.NET Core and SQL Server allow for handling a hi
 
 10/12/2024 Update on the way v.1.0
 
-The code will be improved and we will be working with Angular for the client side.
+The code will be improved and we will be working with the web api in .Net Core.
