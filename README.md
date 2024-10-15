@@ -66,3 +66,36 @@ Scalability and Performance: ASP.NET Core and SQL Server allow for handling a hi
 10/12/2024 Update on the way v.1.0
 
 The code will be improved and we will be working with the web api in .Net Core.
+
+10/14/2024 Update v.1.1
+
+Email Confirmation
+
+This project implements a user registration system that includes email confirmation functionality before users can authenticate and access the application's functionalities.
+
+Functionality
+
+User Registration:
+
+When a user registers using the POST /register endpoint, the system creates a new account with the provided credentials.
+During registration, an email confirmation token is generated and a link is sent to the user's email address.
+The user must click on the confirmation link to verify their email address.
+Email Confirmation:
+
+Clicking on the confirmation link received by email takes the user to an endpoint (GET /confirmemail) that validates the token and confirms the email.
+Once the email is confirmed, the user can log in and use the application.
+If the email is not confirmed, the user will not have full access to the application.
+Technical Details
+Registration Controller:
+
+The controller handles registration and email confirmation.
+During registration (POST /register), UserManager is used to create the user and generate the confirmation token.
+The confirmation link is built with the help of Url.Action, which generates a URL with the appropriate scheme (HTTP or HTTPS) and the necessary parameters (user ID and confirmation token).
+Email Sending Service:
+
+The project uses an email sending service, IEmailSender, which is configured to send emails using SMTP.
+This service is responsible for sending the confirmation email to the user, facilitating account verification.
+Email Confirmation Method:
+
+The confirmation method (GET /confirmemail) receives the userId and the token as parameters.
+This data is validated using UserManager. If the token is valid, the user's email status is set to confirmed.
