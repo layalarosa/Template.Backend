@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -15,7 +16,7 @@ using Template.Backend.Utilities;
 
 namespace Template.Backend.Controllers
 {
-    [Route("api/user")]
+    [Route("user")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isadmin")]
     public class UserController: ControllerBase
@@ -36,7 +37,7 @@ namespace Template.Backend.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("UserList")]
+        [HttpGet("userlist")]
         public async Task<ActionResult<List<UserDto>>> UserLists([FromQuery] PaginationDto paginationDto)
         {
             var queryable = context.Users.AsQueryable();
@@ -70,6 +71,64 @@ namespace Template.Backend.Controllers
             }
 
         }
+
+        //[HttpPost("register")]
+        //[AllowAnonymous]
+        //public async Task<ActionResult<AuthenticationResponseDto>> Register(UserCredentialsDto userCredentialsDto)
+        //{
+        //    var user = new IdentityUser
+        //    {
+        //        Email = userCredentialsDto.Email,
+        //        UserName = userCredentialsDto.Email,
+        //    };
+
+        //    var result = await userManager.CreateAsync(user, userCredentialsDto.Password);
+
+        //    if (result.Succeeded)
+        //    {
+        //        // Generar el token de confirmación de correo
+        //        var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+
+        //        // Generar el link de confirmación
+        //        var confirmationLink = Url.Action("ConfirmEmail", "Account",
+        //            new { userId = user.Id, token = token }, Request.Scheme);
+
+        //        // Enviar el correo electrónico
+        //        await emailSender.SendEmailAsync(user.Email, "Confirma tu cuenta",
+        //            $"Por favor confirma tu cuenta haciendo clic en este enlace: <a href='{confirmationLink}'>Confirmar Email</a>");
+
+        //        // Opcionalmente puedes devolver una respuesta indicando que el registro fue exitoso pero necesita confirmación
+        //        return Ok(new { Message = "Usuario registrado exitosamente. Por favor, revisa tu correo para confirmar tu cuenta." });
+        //    }
+        //    else
+        //    {
+        //        return BadRequest(result.Errors);
+        //    }
+        //}
+
+        [HttpGet("confirmemail")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+                return BadRequest("El token de confirmación es inválido.");
+
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+                return NotFound("El usuario no fue encontrado.");
+
+            var result = await userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                return Ok("Tu correo ha sido confirmado. Ahora puedes iniciar sesión.");
+            }
+            else
+            {
+                return BadRequest("Error al confirmar el correo.");
+            }
+        }
+
+
 
         [HttpPost("login")]
         [AllowAnonymous]
